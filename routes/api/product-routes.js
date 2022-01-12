@@ -6,12 +6,32 @@ const { Product, Category, Tag, ProductTag } = require('../../models');
 // get all products
 router.get('/', (req, res) => {
   // find all products
+  try {
+    const prodData = await Product.findAll();
+    res.status(200).json(prodData);
+  } catch (err) {
+    res.status(500).json(err);
+  }
   // be sure to include its associated Category and Tag data
 });
 
 // get one product
 router.get('/:id', (req, res) => {
   // find a single product by its `id`
+  try {
+    const prodData = await Product.findByPk(req.param.id, {
+      include: [{ model: Tag, through: ProductTag, as: "products_tagged" }],
+    });
+
+    if (!prodData) {
+      res.status(404).json({ message: "no Product with this ID!" });
+      return;
+    }
+
+    res.status(200).json(prodData);
+  } catch (err) {
+    res.status(500).json(err);
+  }
   // be sure to include its associated Category and Tag data
 });
 
@@ -91,6 +111,18 @@ router.put('/:id', (req, res) => {
 
 router.delete('/:id', (req, res) => {
   // delete one product by its `id` value
+  try {
+    const prodData = await Product.destroy({
+      where: { id: req.params.id}
+    });
+    if (!tripData) {
+      res.status(404).json({ message: 'No Tag with this ID!' });
+      return;
+    }
+    res.status(200).json(prodData);
+  } catch (err) {
+    res.status(500).json(err);
+  }
 });
 
 module.exports = router;
