@@ -12,6 +12,7 @@ Product.belongsTo(Category, {
 // Categories have many Products
 Category.hasMany(Product, {
   foreignKey: "product_id",
+  onDelete: 'CASCADE'
 });
 
 // Products belongToMany Tags (through ProductTag)
@@ -20,7 +21,8 @@ Product.belongsToMany(Tag, {
     model: ProductTag,
     unique: false,
   },
-  as: "product_tags",
+  foreignKey: 'product_id',//Keep an Eye on this for future developemnt problems with "SequlizeEagerError"
+  as: 'product_tagged'
 });
 
 // Tags belongToMany Products (through ProductTag)
@@ -29,7 +31,8 @@ Tag.belongsToMany(Product, {
     model: ProductTag,
     unique: false,
   },
-  as: "tagged_products",
+  foreignKey: 'tag_id',
+  as: 'tagged_Product'
 });
 
 module.exports = {
