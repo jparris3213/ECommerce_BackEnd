@@ -9,7 +9,7 @@ This application is a SQL database backend, using Sequalize to handle routing an
 - Insomnia or similar application for interacting with CRUD Routes
 
 Example of application in action here:
-https://youtu.be/KbOw2eIFujY
+[Youtube Example](https://youtu.be/KbOw2eIFujY)
 
 ## Table of Contents
 
